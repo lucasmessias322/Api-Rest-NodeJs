@@ -93,7 +93,7 @@ app.delete("/artigo/:id", (req, res) => {
 });
 
 
-const PORT = process.env.PORT || 8081
+const port = process.env.PORT || 8081
 app.listen(PORT, () => {
-    console.log("Servidor iniciado na porta: " +PORT);
+    console.log("Servidor iniciado na porta: " +port);
 });
