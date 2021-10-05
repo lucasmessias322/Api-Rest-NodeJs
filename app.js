@@ -19,7 +19,7 @@ app.use((req, res, next) => {
     next();
 });
 
-mongoose.connect('mongodb://localhost/celke', {
+mongoose.connect('mongodb+srv://lucasmessias322:p61121713@cluster0.o8p7a.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
