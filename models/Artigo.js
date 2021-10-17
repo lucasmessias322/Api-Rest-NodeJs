@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-const Artigo = new mongoose.Schema({
+const dataTextos = new mongoose.Schema({
     titulo: {
         type: String,
         required: true
     },
-    conteudo: [],
+    textos: [],
     fraseAFraseDoTexto: []
         
     
@@ -14,4 +14,4 @@ const Artigo = new mongoose.Schema({
     timestamps: true,
 });
 
-mongoose.model('artigo', Artigo);
+mongoose.model('dataTextos', dataTextos);
