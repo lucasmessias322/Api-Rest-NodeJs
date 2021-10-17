@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 require("./models/Artigo");
-const Artigo = mongoose.model('artigo');
+const dataTextos = mongoose.model('dataTextos');
 
 const app = express();
 
@@ -29,7 +29,7 @@ mongoose.connect('mongodb+srv://lucasmessias322:p61121713@cluster0.o8p7a.mongodb
 });
 
 app.get("/artigo", (req, res) => {
-    Artigo.find({}).then((artigo) => {
+    dataTextos.find({}).then((artigo) => {
         return res.json(artigo);
     }).catch((erro) => {
         return res.status(400).json({
@@ -40,7 +40,7 @@ app.get("/artigo", (req, res) => {
 });
 
 app.get("/artigo/:id", (req, res) => {
-    Artigo.findOne({ _id: req.params.id }).then((artigo) => {
+    dataTextos.findOne({ _id: req.params.id }).then((artigo) => {
         return res.json(artigo);
     }).catch((erro) => {
         return res.status(400).json({
@@ -51,7 +51,7 @@ app.get("/artigo/:id", (req, res) => {
 })
 
 app.post("/artigo", (req, res) => {
-    const artigo = Artigo.create(req.body, (err) => {
+    const artigo = dataTextos.create(req.body, (err) => {
         if (err) return res.status(400).json({
             error: true,
             message: "Error: Artigo não foi cadastrado com sucesso!"
@@ -65,7 +65,7 @@ app.post("/artigo", (req, res) => {
 });
 
 app.put("/artigo/:id", (req, res) => {
-    const artigo = Artigo.updateOne({ _id: req.params.id}, req.body, (err) => {
+    const artigo = dataTextos.updateOne({ _id: req.params.id}, req.body, (err) => {
         if(err) return res.status(400).json({
             error: true,
             message: "Error: Artigo não foi editado com sucesso!"
@@ -79,7 +79,7 @@ app.put("/artigo/:id", (req, res) => {
 });
 
 app.delete("/artigo/:id", (req, res) => {
-    const artigo = Artigo.deleteOne({_id: req.params.id}, (err) => {
+    const artigo = dataTextos.deleteOne({_id: req.params.id}, (err) => {
         if(err) return res.status(400).json({
             error: true,
             message: "Error: Artigo não foi apagado com sucesso!"
