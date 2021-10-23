@@ -2,14 +2,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+require("./models/Memorize")
 require("./models/Artigo");
 const dataTextos = mongoose.model('dataTextos');
+const dataMemorize = mongoose.model('dataMemorize');
 
 const app = express();
 
 app.use(express.json());
 
-//https://celke.com.br/artigo/consumir-dados-da-api-propria-com-react
 
 app.use((req, res, next) => {
     //console.log("Acessou o Middleware!");
@@ -39,9 +40,31 @@ app.get("/artigo", (req, res) => {
     })
 });
 
+app.get("/memorize", (req, res) => {
+    dataMemorize.find({}).then((memorize) => {
+        return res.json(memorize);
+    }).catch((erro) => {
+        return res.status(400).json({
+            error: true,
+            message: "Nenhum artigo encontrado!"
+        })
+    })
+});
+
 app.get("/artigo/:id", (req, res) => {
     dataTextos.findOne({ _id: req.params.id }).then((artigo) => {
         return res.json(artigo);
+    }).catch((erro) => {
+        return res.status(400).json({
+            error: true,
+            message: "Nenhum artigo encontrado!"
+        })
+    })
+})
+
+app.get("/memorize/:id", (req, res) => {
+    dataMemorize.findOne({ _id: req.params.id }).then((memorize) => {
+        return res.json(memorize);
     }).catch((erro) => {
         return res.status(400).json({
             error: true,
@@ -55,6 +78,20 @@ app.post("/artigo", (req, res) => {
         if (err) return res.status(400).json({
             error: true,
             message: "Error: Artigo não foi cadastrado com sucesso!"
+        });
+
+        return res.status(200).json({
+            error: false,
+            message: "Artigo cadastrado com sucesso!"
+        })
+    });
+});
+
+app.post("/memorize", (req, res) => {
+    const artigo = dataMemorize.create(req.body, (err) => {
+        if (err) return res.status(400).json({
+            error: true,
+            message: "Error: memorize não foi cadastrado com sucesso!"
         });
 
         return res.status(200).json({
@@ -78,8 +115,36 @@ app.put("/artigo/:id", (req, res) => {
     });
 });
 
+app.put("/memorize/:id", (req, res) => {
+    const artigo = dataMemorize.updateOne({ _id: req.params.id}, req.body, (err) => {
+        if(err) return res.status(400).json({
+            error: true,
+            message: "Error: Artigo não foi editado com sucesso!"
+        });
+
+        return res.json({
+            error: false,
+            message: "Artigo editado com sucesso!"
+        });
+    });
+});
+
 app.delete("/artigo/:id", (req, res) => {
     const artigo = dataTextos.deleteOne({_id: req.params.id}, (err) => {
+        if(err) return res.status(400).json({
+            error: true,
+            message: "Error: Artigo não foi apagado com sucesso!"
+        });
+
+        return res.json({
+            error: false,
+            message: "Artigo apagado com sucesso!"
+        });
+    });
+});
+
+app.delete("/memorize/:id", (req, res) => {
+    const artigo = dataMemorize.deleteOne({_id: req.params.id}, (err) => {
         if(err) return res.status(400).json({
             error: true,
             message: "Error: Artigo não foi apagado com sucesso!"
