@@ -6,10 +6,7 @@ const dataTextos = new mongoose.Schema({
         required: true
     },
     textos: [],
-    fraseAFraseDoTexto: [],
-    baralhos: []
-        
-    
+    fraseAFraseDoTexto: []
 },
 {
     timestamps: true,
