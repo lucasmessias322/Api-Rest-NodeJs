@@ -5,7 +5,10 @@ const dataMemorize = new mongoose.Schema({
         type: String,
         required: true
     },
-    items: []  
+    items: [{
+        "questao": String,
+        "resposta": String
+      }]  
 },
 {
     timestamps: true,
