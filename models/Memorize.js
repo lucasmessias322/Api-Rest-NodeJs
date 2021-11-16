@@ -5,10 +5,6 @@ const dataMemorize = new mongoose.Schema({
         type: String,
         required: true
     },
-    quantidadeDePalavras: {
-        type: Number,
-        required: true
-    },
     items: []  
 },
 {
