@@ -4,6 +4,11 @@ const mongoose = require("mongoose");
 //models
 const dataTextos = mongoose.model("dataTextos");
 const dataMemorize = mongoose.model("dataMemorize");
+const audiosTextos = mongoose.model("AudioTextos");
+
+//midlewere
+const multer = require("multer");
+const multerConfig = require("./config/multer");
 
 // get routes
 routes.get("/artigo", (req, res) => {
@@ -62,6 +67,17 @@ routes.get("/memorize/:id", (req, res) => {
     });
 });
 
+routes.get("/audiotextos", async (req, res) => {
+  audiosTextos
+    .find({})
+    .then((response) => {
+      return res.json(response);
+    })
+    .catch((err) => () => {
+      return res.json({ msg: "erro ao buscar" });
+    });
+});
+
 // post routes
 routes.post("/artigo", (req, res) => {
   const artigo = dataTextos.create(req.body, (err) => {
@@ -92,6 +108,24 @@ routes.post("/memorize", (req, res) => {
     });
   });
 });
+
+routes.post(
+  "/audiotextos",
+  multer(multerConfig).single("file"),
+  async (req, res) => {
+    const { originalname: name, size, filename: key } = req.file;
+
+    const audioText = await audiosTextos.create({
+      name,
+      size,
+      key,
+      url: "",
+      path: __dirname + key,
+    });
+
+    return res.json(audioText);
+  }
+);
 
 // put routes
 routes.put("/artigo/:id", (req, res) => {

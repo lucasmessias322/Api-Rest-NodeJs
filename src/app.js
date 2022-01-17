@@ -1,15 +1,17 @@
 require("dotenv").config();
 const express = require('express');
 const mongoose = require('mongoose');
+const morgan = require("morgan");
+
 // cors
 const cors = require('cors');
 
 require("./models/Memorize")
 require("./models/Artigo");
+require("./models/AudioTextos")
 const app = express();
 
 app.use(express.json());
-
 // cors config
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -31,9 +33,9 @@ mongoose.connect(`mongodb+srv://${userName}:${passWord}@cluster0.o8p7a.mongodb.n
     console.log("Erro: Conexão com MongoDB não foi realizada com sucesso!");
 });
 
-
-// Routes
+app.use(morgan('dev'))
 app.use(require("./routes.js"))
+
 
 const port = process.env.PORT || 8081
 app.listen(port, () => {
