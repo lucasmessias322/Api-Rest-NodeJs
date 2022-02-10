@@ -2,10 +2,10 @@
   "name": "api-rest-nodejs",
   "version": "2.0.0",
   "description": "",
-  "main": "./src/app.js",
+  "main": "./src/server.js",
   "scripts": {
-    "start": "node ./src/app.js",
-    "dev": "nodemon ./src/app.js"
+    "start": "node ./src/server.js",
+    "dev": "nodemon ./src/server.js"
   },
   "author": "",
   "license": "ISC",
