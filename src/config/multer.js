@@ -4,19 +4,19 @@ const crypto = require("crypto");
 
 // configuracoes de arquivo como formatos, tamanho maximo, nome etc....
 module.exports = {
-  dest: path.resolve(__dirname, "..", "..", "tmp", "uploads"),
+  dest: path.resolve(__dirname, "..", "public", "ftp"),
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
       const { mimetype } = file;
 
-      if (file.mimetype === "audio/mp3" || file.mimetype === "audio/mpeg") {
-        cb(
-          null,
-          path.resolve(__dirname, "..", "..", "tmp", "uploads", "audio")
-        );
+      switch (mimetype) {
+        case "audio/mp3":
+        case "audio/mpeg":
+          cb(null, path.resolve(__dirname, "..", "public", "ftp"));
+          break;
+        default:
+          break;
       }
-
-
     },
     filename: (req, file, cb) => {
       crypto.randomBytes(16, (err, hash) => {
@@ -29,13 +29,10 @@ module.exports = {
     },
   }),
   limits: {
-    fileSize: 1024 ** 10
+    fileSize: (1024 * 1024) ** 100,
   },
   fileFilter: (req, file, cb) => {
-    const allowedMimes = [
-      "audio/mp3",
-      "audio/mpeg",
-    ];
+    const allowedMimes = ["audio/mp3", "audio/mpeg"];
 
     if (allowedMimes.includes(file.mimetype)) {
       cb(null, true);
