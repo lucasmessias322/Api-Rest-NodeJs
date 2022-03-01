@@ -83,7 +83,6 @@ routes.post("/auth/login", async (req, res) => {
   }
 });
 
-
 // Register
 // routes.post("/auth/register", async (req, res) => {
 //   const { name, email, password, confirmpassword } = req.body;
@@ -129,7 +128,6 @@ routes.post("/auth/login", async (req, res) => {
 //     res.status(500).json({ msg: error });
 //   }
 // });
-
 
 //Create a new dir
 routes.post("/createNewDir/:dirname", checkToken, (req, res) => {
